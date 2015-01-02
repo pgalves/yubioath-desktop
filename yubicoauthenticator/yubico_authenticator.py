@@ -33,7 +33,7 @@ from PySide import QtGui
 parser = argparse.ArgumentParser(description="Yubico Authenticator", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 # Add more options if you like
 parser.add_argument('--version', action='version', version='Yubico Authenticator %s' % text.version)
-parser.add_argument('--disable-systray', dest='nosystray', action='store_true', help="if disable the authenticator will not run in systray mode")
+parser.add_argument('--disable-systray', dest='nosystray', action='store_true', help="if disabled the authenticator will not run in systray mode")
 parser.set_defaults(nosystray=False)
 args = parser.parse_args()
 
@@ -192,13 +192,13 @@ class Window(QtGui.QWidget):
     		#handle the close event (x) top right corner
     		self.ui.closeEvent()
     	else:
-			event.ignore()
-			#self.ui.progress_timer.stop()
+			#event.ignore()
+			##self.ui.progress_timer.stop()
 
-			pointer = QtCore.QCoreApplication.instance()
-			pointer.setQuitOnLastWindowClosed(True)
-			self.showMinimized()
-
+			#pointer = QtCore.QCoreApplication.instance()
+			#pointer.setQuitOnLastWindowClosed(True)
+			#self.showMinimized()
+			self.ui.closeEvent()
 
 if __name__ == "__main__":
 	
@@ -217,20 +217,17 @@ if __name__ == "__main__":
 	else:
 		#the user selected --disable-systray mode
 		app = QtGui.QApplication(sys.argv)
-		app.setQuitOnLastWindowClosed(False)
-		
-		# trayIcon = SystemTrayIcon()
-		# QtCore.QObject.connect(trayIcon, QtCore.SIGNAL("activated(QSystemTrayIcon::ActivationReason)"), trayIcon.iconActivated)
-		# trayIcon.show()
+		app.setQuitOnLastWindowClosed(True)
+
 		neo, is_protected = yc.check_neo_presence()
 		#check if the neo is present
 		if neo:
 			#check if it is password protected
 			if is_protected:
 				#hide icon to avoid double clicks and glitches.
-				password, ok = QtGui.QInputDialog.getText(self, "Password", "Password:", QtGui.QLineEdit.Password)
+				password, ok = QtGui.QInputDialog.getText(None, "YubiOAUTH", "Password:", QtGui.QLineEdit.Password)
 				if ok:
-				#do soemthing
+				#do something
 					if yc.unlock_applet(neo, password):
 						#success! now run the authenticator
 						#time.sleep(0.5)
@@ -239,11 +236,15 @@ if __name__ == "__main__":
 						main_window.activateWindow()
 					else:
 						#fail for some reasons
-						send_message("Warning: No Yubikey NEO detected", text.no_yubikey_no_m82, 0)
+						QtGui.QMessageBox.information(None, "Warning: No Yubikey NEO detected",
+                                               text.no_yubikey_no_m82, QtGui.QMessageBox.Ok)			
+						#return
+						#send_message("Warning: No Yubikey NEO detected", text.no_yubikey_no_m82, 0)
 						sys.exit(-2)
 						#return
 				else:
-					send_message("Error:", "A password is required to access the Yubico Authenticator.", 1)
+					QtGui.QMessageBox.information(QtGui.QWidget(), "Warning!", "A password is required to access the Yubico Authenticator.")
+					#send_message("Error:", "A password is required to access the Yubico Authenticator.", 1)
 					sys.exit(-3)
 					#return
 			#the neo is not protected go on with standard operations!
@@ -255,7 +256,8 @@ if __name__ == "__main__":
 				#self.myapp.raise_()
 		else:
 			#there is no neo
-			send_message("Warning: No Yubikey NEO detected", text.no_yubikey_no_m82, 0)
+			QtGui.QMessageBox.information(None, "Warning: No Yubikey NEO detected", text.no_yubikey_no_m82, QtGui.QMessageBox.Ok)
+			#send_message("Warning: No Yubikey NEO detected", text.no_yubikey_no_m82, 0)
 			sys.exit(-2)
 
 		sys.exit(app.exec_())

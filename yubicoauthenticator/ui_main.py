@@ -17,8 +17,10 @@
 
 DEFAULT_STYLE = """
 QProgressBar{
-    border-radius: 1px;
-    font-size: 15px;
+    border: 1px solid grey;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: bold;
     text-align: center
 }
 
@@ -31,8 +33,10 @@ QProgressBar::chunk {
 
 EXPIRE_STYLE = """
 QProgressBar{
-    border-radius: 1px;
-    font-size: 15px;
+    border: 1px solid grey;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: bold;
     text-align: center
 }
 
@@ -71,10 +75,10 @@ class Ui_Dialog(object):
             basedir = os.path.dirname(__file__)
 
         Dialog.setObjectName("Dialog")
-        Dialog.resize(311, 527)
-        Dialog.setFixedSize(311, 527)
+        Dialog.resize(311, 432)
+        Dialog.setFixedSize(311, 432)
         self.gridLayoutWidget = QtGui.QWidget(Dialog)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 50, 291, 331))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 30, 291, 331))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
 
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
@@ -82,7 +86,7 @@ class Ui_Dialog(object):
         self.gridLayout.setObjectName("gridLayout")
         self.gridLayout.setColumnStretch(1, 1)
 
-        #left right cloumn in the grid layout
+        #left right column in the grid layout
         self.leftList = QtGui.QListWidget(self.gridLayoutWidget)
         self.gridLayout.addWidget(self.leftList, 0, 0, 1, 1)
         self.rightList = QtGui.QListWidget(self.gridLayoutWidget)
@@ -92,13 +96,17 @@ class Ui_Dialog(object):
         listfont.setPointSize(10)
         self.leftList.setFont(listfont)
         self.rightList.setFont(listfont)
+        
+        self.rightList.setContextMenuPolicy(QtCore.Qt.ActionsContextMenu)
+        a = QtGui.QAction("Copy", self.rightList)
+        self.rightList.addAction(a)
 
         # action on click and double click for items in the list
         QtCore.QObject.connect(self.leftList, QtCore.SIGNAL("itemClicked(QListWidgetItem *)"), self.itemClicked)
         QtCore.QObject.connect(self.leftList, QtCore.SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.itemDoubleClicked)
         QtCore.QObject.connect(self.rightList, QtCore.SIGNAL("itemClicked(QListWidgetItem *)"), self.itemClicked)
         QtCore.QObject.connect(self.rightList, QtCore.SIGNAL("itemDoubleClicked(QListWidgetItem *)"), self.itemDoubleClicked)
- 
+
         #timers
         # 1 - timer to update progress bar
         self.progress_timer = QtCore.QTimer()
@@ -107,7 +115,7 @@ class Ui_Dialog(object):
 
         #set the progress bar
         self.progressBar = QtGui.QProgressBar(Dialog)
-        self.progressBar.setGeometry(QtCore.QRect(10, 420, 231, 23))
+        self.progressBar.setGeometry(QtCore.QRect(15, 369, 281, 18))
         self.progressBar.setInputMethodHints(QtCore.Qt.ImhNone)
         self.progressBar.setMaximum(30)
         self.progressBar.setProperty("value", 30)
@@ -118,59 +126,59 @@ class Ui_Dialog(object):
         #
         # Setting up all lables
         #
-        self.label = QtGui.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(243, 423, 51, 16))
-        self.label.setObjectName("label")
-        font = QtGui.QFont()
-        font.setPointSize(8)
-        self.label.setFont(font)
+        #self.label = QtGui.QLabel(Dialog)
+        #self.label.setGeometry(QtCore.QRect(243, 423, 51, 16))
+        #self.label.setObjectName("label")
+        #font = QtGui.QFont()
+        #font.setPointSize(8)
+        #self.label.setFont(font)
 
 
-        self.label_2 = QtGui.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(65, 15, 101, 41))
-        font = QtGui.QFont()
-        font.setFamily("Calibri")
-        self.label_2.setFont(font)
-        self.label_2.setObjectName("label_2")
+        #self.label_2 = QtGui.QLabel(Dialog)
+        #self.label_2.setGeometry(QtCore.QRect(65, 15, 101, 41))
+        #font = QtGui.QFont()
+        #font.setFamily("Calibri")
+        #self.label_2.setFont(font)
+        #self.label_2.setObjectName("label_2")
         
-        self.label_3 = QtGui.QLabel(Dialog)
-        self.label_3.setGeometry(QtCore.QRect(180, 15, 161, 41))        
-        font = QtGui.QFont()
-        font.setFamily("Calibri")
-        self.label_3.setFont(font)
-        self.label_3.setWordWrap(True)
-        self.label_3.setObjectName("label_3")
+        #self.label_3 = QtGui.QLabel(Dialog)
+        #self.label_3.setGeometry(QtCore.QRect(180, 15, 161, 41))
+        #font = QtGui.QFont()
+        #font.setFamily("Calibri")
+        #self.label_3.setFont(font)
+        #self.label_3.setWordWrap(True)
+        #self.label_3.setObjectName("label_3")
         
-        self.label_4 = QtGui.QLabel(Dialog)
-        self.label_4.setGeometry(QtCore.QRect(10, 382, 211, 31))
-        self.label_4.setAutoFillBackground(True)
-        self.label_4.setObjectName("label_4")
+        #self.label_4 = QtGui.QLabel(Dialog)
+        #self.label_4.setGeometry(QtCore.QRect(10, 382, 211, 31))
+        #self.label_4.setAutoFillBackground(True)
+        #self.label_4.setObjectName("label_4")
         
-        self.label_5 = QtGui.QLabel(Dialog)
-        self.label_5.setGeometry(QtCore.QRect(228, 385, 81, 31))
-        self.label_5.setText("")
-        self.label_5.setPixmap(QtGui.QPixmap("yubico-logo81.png"))
-        self.label_5.setObjectName("label_5")
+        #self.label_5 = QtGui.QLabel(Dialog)
+        #self.label_5.setGeometry(QtCore.QRect(228, 385, 81, 31))
+        #self.label_5.setText("")
+        #self.label_5.setPixmap(QtGui.QPixmap("yubico-logo81.png"))
+        #self.label_5.setObjectName("label_5")
 
 
         # adding buttons
         self.pushButton = QtGui.QPushButton(Dialog)
-        self.pushButton.setGeometry(QtCore.QRect(10, 465, 141, 51))
+        self.pushButton.setGeometry(QtCore.QRect(10, 394, 141, 35))
         self.pushButton.setObjectName("pushButton")
         self.pushButton.clicked.connect(self.addCredential)
 
         self.pushButton_2 = QtGui.QPushButton(Dialog)
-        self.pushButton_2.setGeometry(QtCore.QRect(160, 465, 141, 51))
+        self.pushButton_2.setGeometry(QtCore.QRect(160, 394, 141, 35))
         self.pushButton_2.setObjectName("pushButton_2")
         self.pushButton_2.clicked.connect(self.delCredential)
 
 
         # adding separator
-        self.line = QtGui.QFrame(Dialog)
-        self.line.setGeometry(QtCore.QRect(10, 445, 291, 20))
-        self.line.setFrameShape(QtGui.QFrame.HLine)
-        self.line.setFrameShadow(QtGui.QFrame.Sunken)
-        self.line.setObjectName("line")
+        #self.line = QtGui.QFrame(Dialog)
+        #self.line.setGeometry(QtCore.QRect(10, 414, 291, 5))
+        #self.line.setFrameShape(QtGui.QFrame.HLine)
+        #self.line.setFrameShadow(QtGui.QFrame.Sunken)
+        #self.line.setObjectName("line")
 
 
 
@@ -216,13 +224,13 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Yubico Authenticator", None, QtGui.QApplication.UnicodeUTF8))
-        self.progressBar.setFormat(QtGui.QApplication.translate("Dialog", "%vs", None, QtGui.QApplication.UnicodeUTF8))
-        self.label.setText(QtGui.QApplication.translate("Dialog", "Time Out", None, QtGui.QApplication.UnicodeUTF8))
+        self.progressBar.setFormat(QtGui.QApplication.translate("Dialog", "%v s", None, QtGui.QApplication.UnicodeUTF8))
+        #self.label.setText(QtGui.QApplication.translate("Dialog", "Time Out", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton.setText(QtGui.QApplication.translate("Dialog", "Add Account", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_2.setText(QtGui.QApplication.translate("Dialog", "Delete Account", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_2.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#8cc041;\">ACCOUNT</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:11pt; font-weight:600; color:#8cc041;\">CODE</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_4.setText(QtGui.QApplication.translate("Dialog", "<span style=\" font-size:8pt; color:#C04141;\">Click to copy; double click copy and minimize</span>", None, QtGui.QApplication.UnicodeUTF8))
+        #self.label_2.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600; color:#8cc041;\">ACCOUNT</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        #self.label_3.setText(QtGui.QApplication.translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600; color:#8cc041;\">CODE</span></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+        #self.label_4.setText(QtGui.QApplication.translate("Dialog", "<span style=\" font-size:8pt; color:#C04141;\">Click to copy; double click copy and minimize</span>", None, QtGui.QApplication.UnicodeUTF8))
         
         #retranslate menu
         self.menuFile.setTitle(QtGui.QApplication.translate("Dialog", "File", None, QtGui.QApplication.UnicodeUTF8))
@@ -251,8 +259,8 @@ class Ui_Dialog(object):
 
 
     def refresh(self):
-        
-        # compute codes and check if the NEO is inserted into the USB        
+
+        # compute codes and check if the NEO is inserted into the USB   
         cred_list = yc.execute_command("calculate_all")
         
         # if None there is no NEO
@@ -385,7 +393,7 @@ class Ui_Dialog(object):
         app = QtCore.QCoreApplication.instance()
         clipboard = app.clipboard()
         clipboard.clear(QtGui.QClipboard.Clipboard)
-        clipboard.setText(str(item.text()), QtGui.QClipboard.Clipboard)
+        clipboard.setText(str(item.text()), mode=QtGui.QClipboard.Clipboard)
         self.hide_interface()
 
 
